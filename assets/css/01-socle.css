@@ -110,10 +110,11 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
   background-image:linear-gradient(var(--c-signal),var(--c-signal));
   background-repeat:no-repeat;
   background-size:100% var(--trait);
-  /* Remonté sous la ligne de base : au ras du bas de la boîte, il
-     flottait dans l'espace réservé aux descendantes, que ce mot en
-     capitales n'utilise pas. */
-  background-position:left calc(100% - .2em);
+  /* Posé à environ huit pixels sous la ligne de base : assez bas pour
+     dégager les jambages, assez haut pour rester rattaché au mot. La
+     boîte de ligne est desserrée d'autant pour lui laisser la place
+     sans que le masque de révélation ne le rogne. */
+  background-position:left calc(100% - .14em);
   padding:0 .04em;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
