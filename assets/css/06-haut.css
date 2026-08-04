@@ -81,8 +81,10 @@
   .couverture__actions{display:none}
 }
 
-.couverture__cartouche{padding-bottom:var(--sp-8)}
-@media (max-width:767px){.couverture__cartouche{padding-bottom:var(--sp-6)}}
+/* Le rembourrage de la section suivante fournit déjà la respiration :
+   celui du cartouche n'a plus qu'à le décoller de son filet. */
+.couverture__cartouche{padding-bottom:var(--sp-5)}
+@media (max-width:767px){.couverture__cartouche{padding-bottom:var(--sp-4)}}
 
 /* ------------------------------------------------------------
    02 · L'ENTREPRISE — relevé et engagements réunis

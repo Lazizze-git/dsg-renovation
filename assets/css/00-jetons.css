@@ -125,7 +125,7 @@
      ruptures de media query : le dossier garde la même respiration du
      téléphone au grand écran. */
   --x-marge:clamp(20px,4.4vw,64px);
-  --y-bloc:clamp(64px,9vw,152px);
+  --y-bloc:clamp(56px,7.6vw,124px);
 
   --grille-max:1680px;
   --grille-contenu:1560px;
