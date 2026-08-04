@@ -18,7 +18,8 @@
   transition:background-color var(--d-rapide) var(--e-standard),
              color var(--d-rapide) var(--e-standard),
              border-color var(--d-rapide) var(--e-standard),
-             transform var(--d-rapide) var(--e-standard);
+             transform var(--d-rapide) var(--e-standard),
+             scale 160ms var(--e-sortie);
 }
 /* Le rouge de la marque ne sert qu'ici : à appeler l'action. */
 .btn--plein{background:var(--c-signal);color:var(--c-fiche)}
@@ -28,7 +29,12 @@
   transform:scaleY(0);transform-origin:bottom;
   transition:transform var(--d-survol) var(--e-power2);
 }
-.btn--plein:hover::after,.btn--plein:focus-visible::after{transform:scaleY(1)}
+/* Le balayage du bouton reste réservé au survol souris ; au clavier il
+   demeure, car il marque la position du focus. */
+@media (hover:hover) and (pointer:fine){
+  .btn--plein:hover::after{transform:scaleY(1)}
+}
+.btn--plein:focus-visible::after{transform:scaleY(1)}
 .btn--cadre{border:var(--bd-cadre);color:var(--c-encre)}
 .btn--cadre:hover{background:var(--c-encre);color:var(--c-papier)}
 .btn--sombre{background:var(--c-signal);color:var(--c-fiche)}
@@ -42,7 +48,9 @@
   transform:rotate(45deg);
   transition:transform var(--d-rapide) var(--e-standard);
 }
-.btn:hover .fleche{transform:rotate(45deg) translate(2px,-2px)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover .fleche{transform:rotate(45deg) translate(2px,-2px)}
+}
 
 /* ------------------------------------------------------------
    INTERCALAIRE — l'en-tête de chaque pièce du dossier
@@ -137,7 +145,8 @@
   color:var(--c-encre-60);
   transition:background-color var(--d-rapide) var(--e-standard),
              color var(--d-rapide) var(--e-standard),
-             border-color var(--d-rapide) var(--e-standard);
+             border-color var(--d-rapide) var(--e-standard),
+             scale 160ms var(--e-sortie);
 }
 .filtre:hover{border-color:var(--c-ligne-forte);color:var(--c-encre)}
 .filtre[aria-pressed="true"]{

@@ -14,7 +14,8 @@
   padding:var(--sp-5) 0;cursor:pointer;list-style:none;
   font-family:var(--f-texte);font-weight:600;font-size:var(--t-h4);
   letter-spacing:-.01em;line-height:1.35;
-  transition:color var(--d-rapide) var(--e-standard);
+  transition:color var(--d-rapide) var(--e-standard),
+             scale 160ms var(--e-sortie);
 }
 .question__tete:hover{color:var(--c-encre)}
 .question__corps{padding:0 0 var(--sp-6);max-width:66ch;color:var(--c-encre-60)}

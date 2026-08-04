@@ -160,16 +160,18 @@
   /* ---------- Motion ----------
      Le dossier se dessine plutôt qu'il ne surgit : les gestes amples
      sont longs et symétriques (--e-power4), les survols courts et nets. */
+  /* Aucune courbe d'entrée (ease-in) : elle retarde le premier
+     mouvement, à l'instant précis où le regard est le plus attentif,
+     et fait paraître l'interface lente. */
   --e-sortie:cubic-bezier(.22,1,.36,1);
   --e-standard:cubic-bezier(.4,0,.2,1);
-  --e-entree:cubic-bezier(.7,0,.84,0);
   --e-mecanique:cubic-bezier(.65,0,.35,1);
   --e-power2:cubic-bezier(.645,.045,.355,1);
   --e-power4:cubic-bezier(.83,0,.17,1);
   --d-instant:120ms;
   --d-rapide:200ms;
   --d-survol:300ms;
-  --d-normal:340ms;
+  --d-normal:240ms;   /* sous les 300 ms : au-delà, une interaction traîne */
   --d-ample:900ms;
   --d-lent:1200ms;
 

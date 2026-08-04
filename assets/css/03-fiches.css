@@ -15,7 +15,13 @@
   transition:transform var(--d-normal) var(--e-sortie),
              background-color var(--d-rapide) var(--e-standard);
 }
-.chemise:hover,.chemise:focus-within{transform:translateY(-6px)}
+/* Le soulèvement de la chemise n'a de sens qu'au survol d'une souris :
+   au doigt, il resterait figé après le tap. Le focus clavier le garde,
+   lui, car il signale où l'on se trouve. */
+@media (hover:hover) and (pointer:fine){
+  .chemise:hover{transform:translateY(-6px)}
+}
+.chemise:focus-within{transform:translateY(-6px)}
 
 /* Cote du dossier, inscrite dans la languette. */
 .chemise__onglet{
@@ -44,8 +50,10 @@
   background:linear-gradient(180deg,rgba(14,14,14,.34),rgba(14,14,14,0) 46%);
   transition:opacity var(--d-survol) var(--e-power2);
 }
-.chemise:hover .chemise__tirage img{transform:scale(1.04)}
-.chemise:hover .chemise__tirage::after{opacity:0}
+@media (hover:hover) and (pointer:fine){
+  .chemise:hover .chemise__tirage img{transform:scale(1.04)}
+  .chemise:hover .chemise__tirage::after{opacity:0}
+}
 
 .chemise__fiche{flex:1;display:flex;flex-direction:column;gap:var(--sp-4)}
 .chemise__meta{
@@ -100,7 +108,8 @@
   min-height:44px;padding:var(--sp-4) 0 0;cursor:pointer;list-style:none;
   font-family:var(--f-texte);font-weight:600;font-size:15px;
   color:var(--c-encre);
-  transition:color var(--d-rapide) var(--e-standard);
+  transition:color var(--d-rapide) var(--e-standard),
+             scale 160ms var(--e-sortie);
 }
 .depliant__tete:hover{color:var(--c-encre)}
 .depliant__signe{

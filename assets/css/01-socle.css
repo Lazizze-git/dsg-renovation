@@ -131,6 +131,42 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
 .plein-cadre{width:100vw;margin-left:50%;transform:translateX(-50%);position:relative}
 
 /* ------------------------------------------------------------
+   RÉPONSE À LA PRESSION
+   Tout ce qui se presse s'enfonce légèrement. C'est le retour le
+   plus élémentaire qu'une interface puisse donner : sans lui, elle
+   paraît sourde au geste.
+
+   On agit sur `scale` et non sur `transform` : les deux propriétés
+   sont indépendantes, si bien que l'enfoncement se compose avec le
+   déplacement magnétique que le script applique aux boutons, au lieu
+   de l'écraser.
+   ------------------------------------------------------------ */
+.btn,
+.filtre,
+.burger,
+.menu__fermer,
+.lumineuse__fermer,
+.lumineuse__nav,
+.question__tete,
+.depliant__tete,
+.comparateur__poignee::after{
+  transition-property:scale;
+  transition-duration:160ms;
+  transition-timing-function:var(--e-sortie);
+}
+.btn:active,
+.filtre:active,
+.burger:active,
+.menu__fermer:active,
+.lumineuse__fermer:active,
+.lumineuse__nav:active,
+.question__tete:active,
+.depliant__tete:active{scale:.97}
+/* La poignée se saisit plutôt qu'elle ne se presse : c'est sa pastille
+   qui grossit sous le doigt, pas la règle qui la traverse. */
+.comparateur__poignee:active::after{scale:1.1}
+
+/* ------------------------------------------------------------
    LE FILET QUI SE TRACE — geste signature
    Le trait se tire depuis la gauche quand le bloc entre dans
    l'écran, comme le long d'une règle.

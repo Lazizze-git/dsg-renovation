@@ -79,7 +79,9 @@
   display:block;width:26px;height:12px;color:var(--c-signal);
   pointer-events:none;
 }
-.comparateur__poignee:hover::after{transform:translate(-50%,-50%) scale(1.08)}
+@media (hover:hover) and (pointer:fine){
+  .comparateur__poignee:hover::after{transform:translate(-50%,-50%) scale(1.08)}
+}
 .comparateur__poignee:focus-visible{outline:none}
 .comparateur__poignee:focus-visible::after{
   outline:2px solid var(--c-signal-sombre);outline-offset:4px;
