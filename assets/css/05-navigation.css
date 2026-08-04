@@ -1,0 +1,256 @@
+/* ============================================================
+   DSG RÉNOVATION — 05 · NAVIGATION
+   En-tête, menu plein écran, rail de sommaire, barre d'action mobile.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   EN-TÊTE
+   ------------------------------------------------------------ */
+/* Le filet bas est la tranche du classeur sur laquelle la navigation
+   vient s'accrocher. Le fond reste quasi opaque pour garder son
+   contraste au-dessus de toutes les sections, y compris les puits
+   d'ombre ; le flou n'est qu'un raffinement pour les navigateurs qui
+   le gèrent. */
+.entete{
+  position:fixed;inset:0 0 auto 0;z-index:60;
+  background:rgba(247,247,245,.97);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--d-normal) var(--e-standard),
+             background-color var(--d-normal) var(--e-standard);
+}
+@supports (backdrop-filter:blur(1px)){
+  .entete{background:rgba(247,247,245,.9);backdrop-filter:blur(14px) saturate(1.4)}
+  .entete--posee{background:rgba(247,247,245,.94)}
+}
+/* Le filet ne se révèle qu'une fois la page engagée : en haut de dossier,
+   l'en-tête se fond dans la couverture. */
+.entete--posee{border-bottom-color:var(--c-ligne)}
+.entete__inner{
+  display:flex;align-items:center;gap:var(--sp-5);
+  height:var(--h-entete);
+  transition:height var(--d-normal) var(--e-standard);
+}
+.entete--posee .entete__inner{height:calc(var(--h-entete) - 10px)}
+
+.marque{display:flex;align-items:center;flex:0 0 auto;min-height:44px}
+/* Sur le papier, le logo garde son encre. Il n'est retourné en clair
+   que dans le menu et le pied de page, qui sont noirs. */
+.marque img{height:36px;width:auto;object-fit:contain}
+@media (max-width:767px){.marque img{height:28px}}
+
+/* Navigation : des intitulés nus, sans languette ni cartouche. Le repère
+   de lecture est un filet tiré à la règle sous la pièce consultée, posé
+   exactement sur la tranche du classeur. */
+.nav{
+  display:flex;align-items:stretch;gap:var(--sp-1);
+  margin-inline:auto;align-self:stretch;
+}
+.nav a{
+  position:relative;
+  display:inline-flex;align-items:center;
+  padding:0 var(--sp-4);
+  color:var(--c-encre-60);
+  font-family:var(--f-texte);font-weight:500;font-size:var(--t-nav);
+  letter-spacing:0;white-space:nowrap;
+  transition:color var(--d-rapide) var(--e-standard);
+}
+
+/* Le filet se déploie depuis la gauche plutôt que d'apparaître d'un bloc :
+   le geste rappelle le trait tiré le long d'une règle. */
+.nav a::after{
+  content:"";position:absolute;left:var(--sp-3);right:var(--sp-3);bottom:0;
+  height:1px;background:var(--c-encre-40);
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform var(--d-normal) var(--e-sortie),
+             background-color var(--d-rapide) var(--e-standard),
+             height var(--d-rapide) var(--e-standard);
+}
+.nav a:hover,.nav a:focus-visible{color:var(--c-encre)}
+.nav a:hover::after{transform:scaleX(1)}
+
+/* La pièce consultée : filet d'accent plein, qui recouvre la tranche. */
+.nav a[aria-current="true"]{color:var(--c-encre)}
+.nav a[aria-current="true"]::after{
+  transform:scaleX(1);height:2px;bottom:-1px;background:var(--c-signal-sombre);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .nav a::after{transition:none}
+}
+
+/* Un filet fin détache le bloc de contact, en écho à celui qui suit
+   la marque : la barre garde trois blocs lisibles au lieu d'une file. */
+.entete__actions{
+  display:flex;align-items:center;gap:var(--sp-4);flex:0 0 auto;
+  padding-left:var(--sp-5);border-left:var(--bd-fin);
+}
+.entete__tel{
+  font-family:var(--f-mono);font-size:var(--t-nav);letter-spacing:.01em;
+  font-variant-numeric:tabular-nums;color:var(--c-encre);
+  transition:color var(--d-rapide) var(--e-standard);
+}
+.entete__tel:hover{color:var(--c-encre)}
+@media (max-width:1279px){.nav,.entete__actions{display:none}}
+
+/* Bouton menu */
+.burger{
+  display:none;margin-left:auto;width:48px;height:48px;
+  align-items:center;justify-content:center;
+}
+.burger span{
+  display:block;position:relative;width:20px;height:1.5px;background:var(--c-encre);
+}
+.burger span::before,.burger span::after{
+  content:"";position:absolute;left:0;width:20px;height:1.5px;background:var(--c-encre);
+}
+.burger span::before{top:-6px}
+.burger span::after{top:6px}
+@media (max-width:1279px){.burger{display:inline-flex}}
+
+/* ------------------------------------------------------------
+   MENU PLEIN ÉCRAN
+   ------------------------------------------------------------ */
+.menu{
+  position:fixed;inset:0;z-index:70;
+  background:var(--c-bitume);color:var(--c-craie);
+  display:flex;flex-direction:column;overflow-y:auto;
+  padding:var(--sp-4) var(--grille-marge) var(--sp-8);
+  transform:translateY(-100%);visibility:hidden;
+  transition:transform 520ms var(--e-power4),visibility 0s linear 520ms;
+}
+.menu[data-ouvert="true"]{transform:none;visibility:visible;transition-delay:0s}
+.menu__haut{display:flex;align-items:center;justify-content:space-between;height:var(--h-entete)}
+.menu__haut img{height:28px;width:auto;filter:brightness(0) invert(1)}
+.menu__fermer{
+  width:48px;height:48px;border-radius:var(--r-rond);
+  border:1px solid var(--c-ligne-d);
+  display:inline-flex;align-items:center;justify-content:center;font-size:22px;line-height:1;
+}
+.menu__liste{margin-top:var(--sp-6);display:flex;flex-direction:column}
+.menu__liste li{
+  border-top:1px solid var(--c-ligne-d);
+  opacity:0;transform:translateY(10px);
+  transition:opacity 420ms var(--e-sortie),transform 420ms var(--e-sortie);
+}
+.menu[data-ouvert="true"] .menu__liste li{opacity:1;transform:none}
+.menu__liste li:nth-child(1){transition-delay:60ms}
+.menu__liste li:nth-child(2){transition-delay:100ms}
+.menu__liste li:nth-child(3){transition-delay:140ms}
+.menu__liste li:nth-child(4){transition-delay:180ms}
+.menu__liste li:nth-child(5){transition-delay:220ms}
+.menu__liste li:nth-child(6){transition-delay:260ms}
+.menu__liste a{
+  display:flex;align-items:baseline;gap:var(--sp-4);padding:var(--sp-4) 0;
+  font-family:var(--f-titre);font-weight:500;
+  font-size:clamp(1.75rem,4vw,2.75rem);letter-spacing:-.025em;line-height:1.1;
+}
+.menu__liste .n{
+  font-family:var(--f-mono);font-size:var(--t-etiquette);
+  letter-spacing:.14em;color:var(--c-signal-sombre);
+}
+.menu__pied{margin-top:auto;padding-top:var(--sp-7);display:flex;flex-direction:column;gap:var(--sp-4)}
+.menu__pied .donnee{color:var(--c-craie-60)}
+.menu__pied .btn{width:100%}
+
+/* ------------------------------------------------------------
+   RAIL — sommaire du dossier (grand écran uniquement)
+   ------------------------------------------------------------ */
+/* Un réglet d'atelier posé contre le bord de la page : ligne de dos
+   continue, graduations fines régulières, et un cran plus long en face
+   de chaque pièce du dossier. Pas de cartouche ni de fond — un réglet
+   est un outil, il se pose sur le plan sans le masquer.
+   Le pas est fixe : 32 px par pièce, quatre graduations de 8 px.
+   C'est cette régularité qui donne la lecture de précision. */
+.rail{
+  --rail-pas:32px;
+  --rail-marge:var(--sp-5);
+  position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:50;
+  display:none;flex-direction:column;gap:0;
+  padding:var(--rail-marge) var(--sp-6) var(--rail-marge) 0;
+  /* Le réglet traverse aussi des sections en photo pleine largeur : un
+     dégradé de bord — et non un cartouche — garde les chiffres lisibles
+     sans jamais dessiner de boîte par-dessus l'image. */
+  background:linear-gradient(to right,rgba(247,247,245,.94) 40%,rgba(247,247,245,0));
+  transition:background var(--d-normal) var(--e-standard);
+}
+/* Étant fixe, le réglet traverse aussi les blocs noirs — pied de page,
+   bandeau. Il y posait jusqu'ici un voile clair parfaitement visible.
+   Le script lui signale le fond qu'il survole, et il retourne toute sa
+   gamme d'un coup : c'est le même mécanisme que les sections sombres. */
+.rail[data-sur-sombre="true"]{
+  background:linear-gradient(to right,rgba(14,14,14,.94) 40%,rgba(14,14,14,0));
+  --c-ligne-forte:rgba(255,255,255,.42);
+  --c-encre:#FFFFFF;
+  --c-encre-40:#8E8E88;
+  --c-signal-sombre:var(--c-signal-clair);
+}
+@media (min-width:1400px){.rail{display:flex}}
+
+/* Le corps du réglet : la ligne de dos, puis la réglure. */
+.rail::before{
+  content:"";position:absolute;left:0;
+  top:var(--rail-marge);bottom:var(--rail-marge);width:9px;
+  pointer-events:none;
+  background-image:
+    linear-gradient(var(--c-ligne-forte),var(--c-ligne-forte)),
+    repeating-linear-gradient(to bottom,
+      var(--c-ligne-forte) 0 1px,transparent 1px 8px);
+  background-size:1px 100%,5px 100%;
+  background-position:left top,left top;
+  background-repeat:no-repeat;
+}
+
+.rail a{
+  position:relative;
+  display:flex;align-items:center;gap:var(--sp-3);
+  height:var(--rail-pas);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  color:var(--c-encre-40);
+  transition:color var(--d-rapide) var(--e-standard);
+}
+/* La graduation majeure : le cran chiffré du réglet. */
+.rail a::before{
+  content:"";width:13px;height:1px;background:currentColor;flex:0 0 auto;
+  transition:width var(--d-normal) var(--e-power4),height var(--d-instant) linear;
+}
+.rail a:hover{color:var(--c-encre)}
+.rail a:hover::before{width:20px}
+.rail a[aria-current="true"]{color:var(--c-signal-sombre)}
+.rail a[aria-current="true"]::before{width:26px;height:2px}
+.rail__n{flex:0 0 auto;font-variant-numeric:tabular-nums}
+/* Le libellé reste replié tant que le rail n'est pas survolé :
+   la languette n'occupe alors que la largeur des numéros. */
+.rail__nom{
+  max-width:0;opacity:0;overflow:hidden;white-space:nowrap;text-transform:uppercase;
+  transition:max-width var(--d-normal) var(--e-sortie),
+             opacity var(--d-rapide) var(--e-standard);
+}
+.rail:hover .rail__nom,.rail a:focus-visible .rail__nom{max-width:160px;opacity:1}
+
+/* ------------------------------------------------------------
+   BARRE D'ACTION MOBILE
+   ------------------------------------------------------------ */
+.barre-mobile{
+  display:none;position:fixed;inset:auto 0 0 0;z-index:55;
+  gap:var(--sp-2);padding:var(--sp-2) var(--grille-marge) calc(var(--sp-2) + env(safe-area-inset-bottom));
+  background:rgba(247,247,245,.97);border-top:var(--bd-fin);
+  transform:translateY(110%);
+  transition:transform var(--d-normal) var(--e-sortie),
+             background-color var(--d-normal) var(--e-standard),
+             border-color var(--d-normal) var(--e-standard);
+}
+/* En arrivant sur le pied de page, la barre se fond dans le noir au
+   lieu d'y poser un bandeau clair. Le bouton d'appel reste rouge :
+   c'est l'action, elle ne se dilue pas dans le fond. */
+.barre-mobile[data-sur-sombre="true"]{
+  background:rgba(14,14,14,.97);
+  border-top-color:rgba(255,255,255,.16);
+  --c-encre:#FFFFFF;
+  --c-papier:#0E0E0E;
+  --c-ligne:rgba(255,255,255,.16);
+  --c-ligne-forte:rgba(255,255,255,.42);
+}
+.barre-mobile[data-visible="true"]{transform:none}
+.barre-mobile .btn{flex:1;min-height:52px;padding:0 var(--sp-3);font-size:var(--t-petit)}
+@media (max-width:1279px){.barre-mobile{display:flex}}
+

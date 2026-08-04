@@ -1,0 +1,15 @@
+# Fichiers système macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Fichiers d'éditeur
+.vscode/
+.idea/
+*.swp
+
+# Références visuelles de travail : captures de sites tiers, lourdes
+# (~4 Mo) et sans rapport avec le site livré. Retirer cette ligne pour
+# les versionner malgré tout.
+inspirations/

@@ -1,0 +1,28 @@
+/* ============================================================
+   DSG RÉNOVATION — 13 · CARTOUCHE D'IDENTITÉ
+   La fiche d'identité de l'entreprise, en pied de couverture.
+   (Ce fichier portait aussi la pile de chemises, retirée avec la
+   section « Chantiers » qui doublonnait avec les Réalisations.)
+   ============================================================ */
+
+.identite{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:var(--bd-cadre);border-bottom:var(--bd-fin);
+}
+.identite div{padding:var(--sp-4) var(--sp-5);border-left:var(--bd-fin)}
+.identite div:first-child{border-left:0;padding-left:0}
+.identite dt{
+  font-family:var(--f-mono);font-size:var(--t-etiquette);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-encre-40);
+}
+.identite dd{
+  margin-top:var(--sp-2);
+  font-family:var(--f-mono);font-size:var(--t-donnee);
+  letter-spacing:.02em;color:var(--c-encre);
+}
+@media (max-width:767px){
+  .identite{grid-template-columns:1fr 1fr}
+  .identite div{padding:var(--sp-4) var(--sp-3)}
+  .identite div:nth-child(odd){border-left:0;padding-left:0}
+  .identite div:nth-child(n+3){border-top:var(--bd-fin)}
+}

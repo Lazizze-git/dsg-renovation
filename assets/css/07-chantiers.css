@@ -1,0 +1,132 @@
+/* ============================================================
+   DSG RÉNOVATION — 07 · CHANTIERS ET PREUVES
+   Réalisations, méthode, références.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   05 · RÉALISATIONS
+   ------------------------------------------------------------ */
+.chantiers__barre{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:var(--sp-4);margin-bottom:var(--sp-6);
+}
+.chantiers__compte{font-family:var(--f-texte);font-size:14px;color:var(--c-encre-40)}
+/* L'espace vertical laisse respirer les onglets de la rangée suivante. */
+/* Les six chantiers n'ont pas le même poids visuel : la grille alterne
+   une fiche large et une étroite, puis s'inverse. La page cesse d'être
+   un catalogue de vignettes identiques. */
+.chantiers__grille{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  column-gap:var(--grille-goutt);row-gap:var(--sp-8);
+  /* Sans cela, une fiche étroite s'étire sur toute la hauteur de la
+     fiche large qui la côtoie et se retrouve à moitié vide. */
+  align-items:start;
+}
+.chantiers__grille>.chemise{grid-column:span 2}
+.chantiers__grille>.chemise:nth-of-type(4n+1),
+.chantiers__grille>.chemise:nth-of-type(4n+4){grid-column:span 4}
+/* La fiche large respire dans un tirage panoramique, l'étroite se
+   resserre au carré. */
+.chantiers__grille>.chemise .chemise__tirage{aspect-ratio:1/1}
+.chantiers__grille>.chemise:nth-of-type(4n+1) .chemise__tirage,
+.chantiers__grille>.chemise:nth-of-type(4n+4) .chemise__tirage{aspect-ratio:4/3}
+@media (max-width:1023px){
+  .chantiers__grille{grid-template-columns:repeat(2,1fr)}
+  .chantiers__grille>.chemise,
+  .chantiers__grille>.chemise:nth-of-type(4n+1),
+  .chantiers__grille>.chemise:nth-of-type(4n+4){grid-column:span 1}
+  .chantiers__grille>.chemise .chemise__tirage,
+  .chantiers__grille>.chemise:nth-of-type(4n+1) .chemise__tirage,
+  .chantiers__grille>.chemise:nth-of-type(4n+4) .chemise__tirage{aspect-ratio:4/3}
+}
+@media (max-width:639px){.chantiers__grille{grid-template-columns:1fr}}
+.chantiers__vide{
+  grid-column:1/-1;padding:var(--sp-8) 0;text-align:center;color:var(--c-encre-60);
+}
+
+/* Chantier signature : bloc en débordement de grille */
+.signature{
+  margin-top:var(--sp-10);display:grid;grid-template-columns:repeat(12,1fr);
+  gap:var(--grille-goutt);align-items:center;
+}
+.signature__texte{grid-column:1/6}
+.signature__media{
+  grid-column:6/13;position:relative;
+  width:calc(100% + ((100vw - min(100vw,var(--grille-contenu))) / 2) + var(--grille-marge));
+}
+/* Le cadre borne l'agrandissement de la révélation ; le tampon, lui,
+   reste en dehors pour pouvoir déborder du haut de l'image. */
+.signature__cadre{display:block;overflow:hidden}
+.signature__media img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
+.signature__tampon{position:absolute;left:calc(-1 * var(--sp-7));top:var(--sp-7);z-index:3}
+@media (max-width:1023px){
+  .signature{grid-template-columns:repeat(8,1fr)}
+  .signature__texte{grid-column:1/9}
+  .signature__media{grid-column:1/9;width:calc(100% + var(--grille-marge));margin-top:var(--sp-6)}
+  .signature__tampon{left:auto;right:var(--sp-6);top:calc(-1 * var(--sp-6))}
+}
+@media (max-width:767px){
+  .signature{grid-template-columns:repeat(4,1fr);margin-top:var(--sp-8)}
+  .signature__texte,.signature__media{grid-column:1/5}
+  .signature__tampon{right:var(--sp-4)}
+}
+
+/* ------------------------------------------------------------
+   07 · RÉFÉRENCES (partenaires + témoignages)
+   ------------------------------------------------------------ */
+.partenaires{background:var(--c-papier-2);padding-block:var(--sec-y);position:relative;z-index:2}
+.partenaires__grille{
+  margin-top:var(--sp-6);display:grid;grid-template-columns:repeat(7,1fr);
+  gap:var(--sp-6) var(--sp-5);align-items:center;
+}
+.partenaires__grille li{display:grid;place-items:center;height:50px}
+/* Les logos partenaires arrivent sur des fonds variés : on les ramène
+   tous à un aplat d'encre, comme un tampon. La bande étant claire, ils
+   sont noircis — les blanchir les effacerait. */
+.partenaires__grille img{
+  max-height:50px;max-width:100%;width:auto;object-fit:contain;
+  filter:brightness(0);opacity:.55;
+  transition:opacity var(--d-rapide) var(--e-standard);
+}
+.partenaires__grille li:hover img{opacity:1}
+@media (max-width:1023px){.partenaires__grille{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:479px){
+  .partenaires__grille{grid-template-columns:repeat(2,1fr)}
+  .partenaires__grille li{height:64px}
+  .partenaires__grille img{max-height:64px}
+}
+
+/* Trois cellules de bordereau plutôt que trois cartes : le filet
+   suffit à séparer, le fond n'apporte que du poids. */
+.temoins{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid var(--c-ligne);
+}
+@media (max-width:1023px){
+  .temoins{grid-template-columns:1fr}
+  .temoin{
+    border-left:0!important;border-top:1px solid var(--c-ligne);
+    gap:var(--sp-3);padding:var(--sp-5) 0;
+  }
+  .temoins>.temoin:first-child{border-top:0;padding-top:var(--sp-4)}
+  .temoin blockquote{font-size:var(--t-texte);line-height:1.5}
+  .temoin figcaption{padding-top:var(--sp-3)}
+}
+.temoin{
+  display:flex;flex-direction:column;gap:var(--sp-5);
+  border-left:1px solid var(--c-ligne);
+  padding:var(--sp-6) var(--sp-5);
+}
+.temoins>.temoin:first-child{border-left:0;padding-left:0}
+.temoin blockquote{
+  flex:1;font-family:var(--f-texte);font-weight:500;font-size:var(--t-h4);
+  letter-spacing:-.01em;line-height:1.4;
+}
+.temoin figcaption{border-top:var(--bd-fin);padding-top:var(--sp-4)}
+.temoin__qui{font-family:var(--f-mono);font-size:var(--t-donnee);letter-spacing:.02em}
+.temoin__quoi{
+  display:block;margin-top:var(--sp-1);
+  font-family:var(--f-mono);font-size:13px;letter-spacing:.01em;
+  color:var(--c-encre-40);
+}
+

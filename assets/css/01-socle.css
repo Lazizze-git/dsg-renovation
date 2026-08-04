@@ -1,0 +1,242 @@
+/* ============================================================
+   DSG RÉNOVATION — 01 · SOCLE
+   Remise à zéro, matière du papier, typographie, utilitaires.
+   ============================================================ */
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--h-entete) + var(--sp-6));
+}
+
+body{
+  margin:0;
+  background:var(--c-papier);
+  color:var(--c-encre);
+  font-family:var(--f-texte);
+  font-size:var(--t-texte);
+  line-height:1.65;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+/* Grain du carton : très léger, fixe, non interactif.
+   C'est la seule texture du site (§ DA : pas de fond « béton »).
+   Sur un fond de nuit c'est lui qui empêche l'aplat de paraître mort :
+   en lumière douce, il fait respirer la matière sans l'éclaircir. */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+
+:focus-visible{outline:2px solid var(--c-focus);outline-offset:3px;border-radius:2px}
+.sur-sombre :focus-visible{outline-color:var(--c-signal-sombre)}
+::selection{background:var(--c-signal);color:var(--c-fiche)}
+
+/* ---------- Accès clavier ---------- */
+.saut{
+  position:absolute;left:var(--sp-4);top:var(--sp-4);z-index:200;
+  transform:translateY(-250%);
+  background:var(--c-encre);color:var(--c-papier);
+  padding:var(--sp-3) var(--sp-5);border-radius:var(--r-net);
+  font-size:var(--t-petit);
+}
+.saut:focus{transform:none}
+
+
+/* ============================================================
+   TYPOGRAPHIE
+   ============================================================ */
+/* Les titres tiennent par leur échelle et leur crénage, pas par le gras.
+   Seul le titre de couverture garde la graisse 800 et les capitales :
+   c'est le seul cri du dossier, et il n'a lieu qu'une fois. */
+h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-wrap:balance}
+
+.h2{font-size:var(--t-h2);font-weight:500;letter-spacing:-.025em;line-height:1.06}
+.h3{font-size:var(--t-h3);font-weight:500;letter-spacing:-.015em;line-height:1.15}
+.h4{font-family:var(--f-texte);font-weight:600;font-size:var(--t-h4);letter-spacing:-.01em;line-height:1.3}
+
+.chapo{font-size:var(--t-chapo);line-height:1.5;color:var(--c-encre-60);max-width:54ch}
+.sur-sombre .chapo{color:var(--c-craie-60)}
+
+.texte{max-width:66ch;color:var(--c-encre-60)}
+.sur-sombre .texte{color:var(--c-craie-60)}
+
+/* Étiquette dactylographiée : la signature du dossier. */
+.etiquette{
+  font-family:var(--f-mono);font-weight:500;font-size:var(--t-etiquette);
+  letter-spacing:.14em;text-transform:uppercase;line-height:1.2;
+  color:var(--c-encre-60);
+}
+.etiquette b{color:var(--c-signal-sombre);font-weight:500}
+.sur-sombre .etiquette{color:var(--c-craie-60)}
+.sur-sombre .etiquette b{color:var(--c-signal-sombre)}
+
+.donnee{
+  font-family:var(--f-mono);font-size:var(--t-donnee);
+  letter-spacing:.02em;line-height:1.5;font-variant-numeric:tabular-nums;
+}
+.nb{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Surlignage : un seul mot par titre. */
+/* Le fond suit la boîte de ligne, qui s'arrête à la hauteur des
+   capitales : sans marge haute, l'accent d'un Î ou d'un É dépasse du
+   rouge. Le débord vertical est purement visuel, il ne pousse pas les
+   lignes voisines puisque l'élément est en ligne. */
+.souligne{
+  background:var(--c-signal);color:var(--c-fiche);
+  padding:.1em .12em .04em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+
+/* ============================================================
+   MISE EN PAGE
+   ============================================================ */
+.zone{
+  width:100%;max-width:var(--grille-contenu);
+  margin-inline:auto;padding-inline:var(--grille-marge);
+  position:relative;z-index:2;
+}
+.section{padding-block:var(--sec-y);position:relative;z-index:2}
+.grille12{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--grille-goutt)}
+@media (max-width:1023px){.grille12{grid-template-columns:repeat(8,1fr)}}
+@media (max-width:767px){.grille12{grid-template-columns:repeat(4,1fr)}}
+
+/* Bloc qui sort de la grille et va bord à bord. */
+.plein-cadre{width:100vw;margin-left:50%;transform:translateX(-50%);position:relative}
+
+/* ------------------------------------------------------------
+   LE FILET QUI SE TRACE — geste signature
+   Le trait se tire depuis la gauche quand le bloc entre dans
+   l'écran, comme le long d'une règle.
+   ------------------------------------------------------------ */
+/* Le filet est tracé par remplissage du fond, et non par un
+   pseudo-élément : l'élément n'a donc besoin d'aucun positionnement
+   particulier. C'est ce qui permet de poser le geste partout, y compris
+   là où un enfant est déjà ancré en absolu — la vignette de la liste
+   des métiers, la cote d'une chemise.
+   Le filet est entier par défaut : sans JavaScript, le dossier reste
+   intégralement réglé. Ce n'est qu'avec le script qu'il part de zéro. */
+.trace{
+  border-top-width:0;
+  background-image:linear-gradient(var(--c-trait,var(--c-ligne)),var(--c-trait,var(--c-ligne)));
+  background-repeat:no-repeat;
+  background-position:top left;
+  background-size:100% var(--e-trait,1px);
+}
+.trace--bas{
+  border-bottom-width:0;
+  background-position:bottom left;
+}
+.js .trace{
+  background-size:0 var(--e-trait,1px);
+  transition:background-size var(--d-ample) var(--e-power4);
+}
+.js .est-vu .trace,.js .trace.est-vu{background-size:100% var(--e-trait,1px)}
+.js .est-vu .trace:nth-of-type(2){transition-delay:60ms}
+.js .est-vu .trace:nth-of-type(3){transition-delay:120ms}
+.js .est-vu .trace:nth-of-type(4){transition-delay:180ms}
+.js .est-vu .trace:nth-of-type(5){transition-delay:240ms}
+.js .est-vu .trace:nth-of-type(6){transition-delay:300ms}
+
+/* ============================================================
+   RÉVÉLATIONS AU SCROLL
+   Le contenu est visible par défaut : si le JS échoue, on lit tout.
+   ============================================================ */
+.js .revele{
+  opacity:0;transform:translateY(18px);
+  transition:opacity var(--d-ample) var(--e-sortie),transform var(--d-ample) var(--e-sortie);
+}
+.js .revele.est-vu{opacity:1;transform:none}
+
+.js .revele-img img{
+  clip-path:inset(100% 0 0 0);transform:scale(1.06);
+  transition:clip-path var(--d-lent) var(--e-sortie),transform var(--d-lent) var(--e-sortie);
+}
+.js .revele-img.est-vu img{clip-path:inset(0);transform:none}
+
+/* Titres révélés ligne par ligne : chaque ligne monte derrière un masque.
+   Les lignes sont découpées par assets/js/motion.js sur les <br>. */
+.js [data-lignes] .ligne{display:block;overflow:hidden}
+.js [data-lignes] .ligne>span{
+  display:block;transform:translateY(106%);
+  transition:transform var(--d-ample) var(--e-sortie);
+}
+.js .est-vu [data-lignes] .ligne>span,
+.js [data-lignes].est-vu .ligne>span{transform:none}
+.js [data-lignes] .ligne:nth-child(2)>span{transition-delay:90ms}
+.js [data-lignes] .ligne:nth-child(3)>span{transition-delay:180ms}
+
+/* ============================================================
+   MOUVEMENT RÉDUIT
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:120ms!important;
+    transition-property:opacity,color,background-color,border-color!important;
+  }
+  .js .revele{transform:none!important}
+  .js .revele-img img{clip-path:none!important;transform:none!important}
+  /* Les primitives partent d'un remplissage à zéro : sans cette
+     réinitialisation, filets et voiles ne s'afficheraient jamais. */
+  .js .trace{background-size:100% var(--e-trait,1px)!important}
+  .metiers__ligne{background-size:100% 0,100% 1px!important}
+  .metiers__ligne:hover{background-size:100% 100%,100% 1px!important}
+  .btn--plein::after{
+    transform:none!important;opacity:0;
+    transition:opacity var(--d-rapide) linear;
+  }
+  .btn--plein:hover::after,.btn--plein:focus-visible::after{opacity:1}
+}
+
+/* ============================================================
+   IMPRESSION — le dossier doit pouvoir être imprimé.
+   ============================================================ */
+@media print{
+  /* Le dossier bascule sur papier blanc en redéfinissant les jetons, et
+     non composant par composant : les 45 blocs qui portent une couleur
+     explicite gagneraient sinon en spécificité sur un simple reset du
+     body, et le dossier sortirait à l'encre crème sur feuille blanche —
+     c'est-à-dire vierge. */
+  :root{
+    --c-papier:#fff;--c-papier-2:#fff;--c-fiche:#fff;
+    --c-bitume:#fff;--c-bitume-2:#fff;
+    --c-encre:#000;--c-encre-60:#333;--c-encre-40:#555;
+    --c-craie:#000;--c-craie-60:#333;
+    --c-signal:#000;--c-signal-sombre:#000;--c-signal-clair:#000;
+    --c-bleu:#000;--c-valide:#000;--c-alerte:#000;
+    --c-ligne:rgba(0,0,0,.32);--c-ligne-forte:rgba(0,0,0,.62);
+    --c-ligne-d:rgba(0,0,0,.32);
+    --om-0:none;--om-1:none;--om-2:none;
+  }
+  body{background:#fff;color:#000;padding:0}
+  body::before,.rail,.entete,.barre-mobile,.menu,.bandeau,.filtres{display:none!important}
+  .section{padding-block:24px;break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:10px}
+  .chemise,.temoin{break-inside:avoid;border:1px solid #000}
+  /* Les logos sont retournés en clair à l'écran : sur papier, ils
+     doivent revenir à leur encre d'origine. */
+  .marque img,.pied__marque img,.menu__haut img{filter:none}
+  .partenaires__grille img{filter:grayscale(1);opacity:1}
+}

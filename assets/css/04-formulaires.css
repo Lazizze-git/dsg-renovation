@@ -1,0 +1,60 @@
+/* ============================================================
+   DSG RÉNOVATION — 04 · FORMULAIRES
+   Champs du bordereau de demande de devis.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CHAMPS DE FORMULAIRE — style « bordereau administratif »
+   ------------------------------------------------------------ */
+.champ{display:flex;flex-direction:column;gap:var(--sp-2)}
+.champ__label{
+  font-family:var(--f-texte);font-weight:500;font-size:14px;
+  color:var(--c-encre-60);
+}
+.champ__label span{color:var(--c-signal)}
+
+.champ input,
+.champ select,
+.champ textarea{
+  width:100%;min-height:52px;padding:var(--sp-3) var(--sp-4);
+  background:var(--c-fiche);color:var(--c-encre);
+  border:1.5px solid var(--c-ligne);border-radius:var(--r-net);
+  font-family:var(--f-texte);font-size:var(--t-texte);line-height:1.5;
+  transition:border-color var(--d-rapide) var(--e-standard);
+}
+.champ textarea{min-height:132px;resize:vertical}
+.champ select{
+  appearance:none;cursor:pointer;padding-right:var(--sp-8);
+  background-image:linear-gradient(45deg,transparent 50%,var(--c-encre) 50%),
+                   linear-gradient(135deg,var(--c-encre) 50%,transparent 50%);
+  background-position:calc(100% - 26px) 24px,calc(100% - 20px) 24px;
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;
+}
+.champ input:hover,.champ select:hover,.champ textarea:hover{border-color:var(--c-ligne-forte)}
+.champ input:focus,.champ select:focus,.champ textarea:focus{
+  border-color:var(--c-bleu);outline:2px solid var(--c-bleu);outline-offset:1px;
+}
+.champ input::placeholder,.champ textarea::placeholder{color:var(--c-encre-40)}
+
+.champ--erreur input,.champ--erreur select,.champ--erreur textarea{border-color:var(--c-alerte)}
+.champ__erreur{
+  font-family:var(--f-mono);font-size:var(--t-etiquette);
+  letter-spacing:.06em;color:var(--c-alerte);
+}
+.champ__erreur:empty{display:none}
+
+.consentement{
+  display:flex;align-items:flex-start;gap:var(--sp-3);
+  font-size:var(--t-petit);line-height:1.55;color:var(--c-encre-60);
+}
+.consentement input{
+  width:24px;height:24px;min-height:0;flex:0 0 auto;margin-top:0;
+  accent-color:var(--c-signal);cursor:pointer;
+}
+
+.message-formulaire{
+  padding:var(--sp-4);border-radius:var(--r-net);
+  border-left:3px solid var(--c-valide);background:var(--c-papier-2);
+  font-size:var(--t-petit);line-height:1.6;
+}
+.message-formulaire:empty{display:none}

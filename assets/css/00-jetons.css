@@ -1,0 +1,190 @@
+/* ============================================================
+   DSG RÉNOVATION — 00 · JETONS DE DESIGN
+   Concept : « PAPIER BLANC, ENCRE NOIRE, ROUGE FRANC »
+
+   Répartition 60 / 30 / 10 :
+     60 %  papier — le blanc, l'espace, la lumière du chantier fini
+     30 %  encre  — noir profond : sections pleines, pied, photos
+     10 %  rouge  — le signal seul : appels à l'action, repères,
+                    section en cours de lecture
+
+   Le rouge n'est pas une matière ici, c'est un signal. Il ne couvre
+   jamais de grande surface : il claque parce qu'il est rare.
+
+   Le rouge existe en trois nuances, et ce n'est pas un caprice. Un
+   rouge assez vif pour éclater en aplat (5.0:1 sous du blanc) tombe
+   à 4.3:1 en texte sur les surfaces secondaires, sous le seuil AA.
+   D'où : --c-signal pour les aplats, --c-signal-sombre pour ce qui
+   est écrit ou tracé sur fond clair, --c-signal-clair sur fond noir.
+
+   Les sections sombres n'héritent pas de l'encre du fond : elles
+   redéfinissent la gamme localement (voir « SECTIONS SOMBRES »).
+   Aucun composant n'a donc à connaître la couleur de son fond — il
+   demande --c-encre et obtient la bonne.
+
+   Toutes les valeurs du site viennent d'ici. Aucune valeur
+   codée en dur ailleurs (hors cas documenté).
+   Chaque couleur de texte porte son rapport de contraste mesuré :
+   aucune ne descend sous 4.5:1, seuil AA.
+   ============================================================ */
+:root{
+  /* ---------- Surfaces ---------- */
+  --c-papier:#F7F7F5;        /* DOMINANTE 60 % : papier, blanc légèrement cassé */
+  --c-papier-2:#EDEDEA;      /* creux : bandeaux, surfaces en retrait */
+  --c-fiche:#FFFFFF;         /* relief : cartes et formulaire, blanc pur */
+  --c-bitume:#0E0E0E;        /* 30 % : sections pleines, pied de page */
+  --c-bitume-2:#1C1C1C;      /* surface élevée dans une section noire */
+
+  /* ---------- Textes sur le papier ---------- */
+  --c-encre:#0E0E0E;         /* 18.0:1 — texte principal */
+  --c-encre-60:#55554F;      /* 7.0:1  — textes secondaires */
+  --c-encre-40:#67675F;      /* 4.9:1 au pire — métadonnées, jamais sous 12px */
+  --c-craie:#FFFFFF;         /* 19.3:1 sur le noir */
+  --c-craie-60:#A8A8A2;      /* 8.1:1 sur le noir */
+
+  /* ---------- Signal — ACCENT 10 % ---------- */
+  --c-signal:#D91F26;        /* aplats : boutons, surlignage (blanc dessus, 5.0:1) */
+  --c-signal-sombre:#B0161C;  /* 6.6:1 — écrit ou tracé sur fond clair, et survol */
+  --c-signal-clair:#FF6B5E;  /* 6.9:1 — écrit ou tracé sur fond noir */
+  --c-bleu:#1B3B6F;          /* focus des champs */
+
+  /* ---------- États système ---------- */
+  --c-valide:#1B7A52;
+  --c-alerte:#A33818;
+  --c-focus:#1B3B6F;
+
+  /* ---------- Filets ---------- */
+  --c-ligne:rgba(14,14,14,.14);
+  --c-ligne-forte:rgba(14,14,14,.42);
+  --c-ligne-d:rgba(255,255,255,.18);
+  --bd-fin:1px solid var(--c-ligne);
+  --bd-fin-d:1px solid var(--c-ligne-d);
+  --bd-cadre:1.5px solid var(--c-encre);
+}
+
+/* ============================================================
+   SECTIONS SOMBRES — les 30 % d'encre
+   Un bloc noir redéfinit la gamme pour lui et tout ce qu'il contient.
+   C'est ce qui évite d'avoir à maintenir une exception par composant
+   le jour où la dominante change — et le site vient d'en changer.
+   ============================================================ */
+.sur-sombre,
+.pied,
+.menu,
+.bandeau{
+  --c-papier:#0E0E0E;
+  --c-papier-2:#1C1C1C;
+  --c-fiche:#1C1C1C;
+  --c-encre:#FFFFFF;         /* 19.3:1 */
+  --c-encre-60:#A8A8A2;      /* 8.1:1 */
+  --c-encre-40:#8E8E88;      /* 5.6:1 */
+  --c-signal-sombre:var(--c-signal-sombre);
+  --c-ligne:rgba(255,255,255,.16);
+  --c-ligne-forte:rgba(255,255,255,.42);
+  --c-valide:#7FCBA4;
+  --c-alerte:#F0A07A;
+  --c-focus:#FFD98A;
+  color:var(--c-encre);
+}
+
+:root{
+  /* ---------- Typographie ---------- */
+  --f-titre:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-texte:"IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+
+  /* Seul le titre de couverture est en capitales et en graisse 800.
+     Tous les autres titres passent en Archivo 500, casse normale :
+     la tenue vient de l'échelle et du crénage, pas du gras. */
+  --t-couverture:clamp(1.875rem,3.8vw,3.875rem);
+  /* Titre de pièce : le plancher tient compte du mot le plus long
+     du site (« Professionnalisme, ») sur un écran de 360 px. */
+  --t-piece:clamp(2rem,4.6vw,4rem);
+  --t-h2:clamp(1.75rem,3.4vw,3rem);
+  --t-h3:clamp(1.375rem,2vw,1.75rem);
+  --t-h4:clamp(1.125rem,1.4vw,1.3125rem);
+  --t-chapo:clamp(1.0625rem,1.3vw,1.25rem);
+  --t-texte:clamp(1rem,1.05vw,1.0625rem);
+  /* Navigation, filtres, liens de pied : une seule taille de service. */
+  --t-nav:.9375rem;
+  --t-petit:.875rem;
+  --t-etiquette:.75rem;
+  --t-donnee:clamp(.8125rem,1vw,.875rem);
+  /* Sous le titre de pièce (3rem) : un chiffre plus gros que le titre
+     qui le surmonte inverse la hiérarchie de lecture. */
+  --t-chiffre:clamp(2rem,3vw,2.75rem);
+
+  /* ---------- Espacement (échelle 4px) ---------- */
+  --sp-1:4px;  --sp-2:8px;   --sp-3:12px;  --sp-4:16px;
+  --sp-5:24px; --sp-6:32px;  --sp-7:48px;  --sp-8:64px;
+  --sp-9:96px; --sp-10:128px;--sp-11:160px;--sp-12:200px;
+
+  /* ---------- Grille ----------
+     Deux jetons fluides portent tout le rythme, horizontal et vertical.
+     Comme ils sont interpolés en continu, la page ne saute plus aux
+     ruptures de media query : le dossier garde la même respiration du
+     téléphone au grand écran. */
+  --x-marge:clamp(20px,4.4vw,64px);
+  --y-bloc:clamp(64px,9vw,152px);
+
+  --grille-max:1680px;
+  --grille-contenu:1560px;
+  --grille-texte:680px;
+  --grille-goutt:24px;
+  --grille-marge:var(--x-marge);
+
+  /* ---------- Rayons ----------
+     Le carton se coupe net : un seul rayon de travail, très court.
+     Le cercle complet est réservé aux objets réellement ronds —
+     tampon, pastille de curseur, boutons circulaires. Un bouton
+     rectangulaire est un bouton de bordereau, pas une pilule. */
+  --r-0:0px;
+  --r-net:3px;
+  /* Les tirages photo sont les seules surfaces à s'adoucir un peu :
+     un angle vif sur une grande image durcit toute la page. */
+  --r-image:10px;
+  --r-rond:999px;
+  /* Alias historiques, conservés le temps que tous les appels migrent. */
+  --r-fiche:var(--r-net);
+  --r-pilule:var(--r-rond);
+  --r-md:var(--r-net);
+  --r-lg:var(--r-net);
+
+  /* ---------- Ombres (volontairement pauvres) ----------
+     Une feuille posée sur une autre : l'ombre est courte et franche,
+     jamais un halo diffus. Réservée aux objets réellement flottants. */
+  --om-0:none;
+  --om-1:0 1px 2px rgba(14,14,14,.06),0 8px 20px rgba(14,14,14,.08);
+  --om-2:0 2px 4px rgba(14,14,14,.08),0 20px 48px rgba(14,14,14,.14);
+
+  /* ---------- Motion ----------
+     Le dossier se dessine plutôt qu'il ne surgit : les gestes amples
+     sont longs et symétriques (--e-power4), les survols courts et nets. */
+  --e-sortie:cubic-bezier(.22,1,.36,1);
+  --e-standard:cubic-bezier(.4,0,.2,1);
+  --e-entree:cubic-bezier(.7,0,.84,0);
+  --e-mecanique:cubic-bezier(.65,0,.35,1);
+  --e-power2:cubic-bezier(.645,.045,.355,1);
+  --e-power4:cubic-bezier(.83,0,.17,1);
+  --d-instant:120ms;
+  --d-rapide:200ms;
+  --d-survol:300ms;
+  --d-normal:340ms;
+  --d-ample:900ms;
+  --d-lent:1200ms;
+
+  /* ---------- Mesures d'interface ---------- */
+  --h-entete:74px;
+  --h-barre-mobile:0px;
+  --sec-y:var(--y-bloc);
+}
+
+/* Marge de page et rythme vertical ne sont plus redéfinis ici : ils sont
+   fluides et suivent la largeur d'écran sans rupture. Ne restent que les
+   mesures qui changent réellement de nature selon l'appareil. */
+@media (max-width:1279px){
+  :root{--grille-goutt:20px;--h-barre-mobile:68px}
+}
+@media (max-width:767px){
+  :root{--grille-goutt:16px;--h-entete:62px}
+}

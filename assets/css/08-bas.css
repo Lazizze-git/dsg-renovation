@@ -1,0 +1,137 @@
+/* ============================================================
+   DSG RÉNOVATION — 08 · BAS DE DOSSIER
+   Questions, demande de devis, pied de page.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   08 · QUESTIONS
+   ------------------------------------------------------------ */
+.questions__liste{max-width:900px}
+.question{border-top:var(--bd-fin)}
+.questions__liste li:last-child .question{border-bottom:var(--bd-fin)}
+.question__tete{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);
+  padding:var(--sp-5) 0;cursor:pointer;list-style:none;
+  font-family:var(--f-texte);font-weight:600;font-size:var(--t-h4);
+  letter-spacing:-.01em;line-height:1.35;
+  transition:color var(--d-rapide) var(--e-standard);
+}
+.question__tete:hover{color:var(--c-encre)}
+.question__corps{padding:0 0 var(--sp-6);max-width:66ch;color:var(--c-encre-60)}
+.question__corps a{color:var(--c-signal-sombre);text-decoration:underline;text-underline-offset:3px}
+
+/* ------------------------------------------------------------
+   09 · DEMANDE (formulaire + coordonnées)
+   ------------------------------------------------------------ */
+.demande__grille{align-items:start}
+.demande__form{grid-column:1/8}
+.demande__contact{grid-column:9/13;position:sticky;top:calc(var(--h-entete) + var(--sp-6))}
+@media (max-width:1023px){
+  .demande__form{grid-column:1/9}
+  .demande__contact{grid-column:1/9;position:static;margin-top:var(--sp-7)}
+}
+@media (max-width:767px){.demande__form,.demande__contact{grid-column:1/5}}
+
+.formulaire{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);
+  background:var(--c-fiche);border:var(--bd-cadre);border-radius:var(--r-net);
+  padding:var(--sp-6);
+}
+.formulaire__entete{
+  grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:var(--sp-3);
+  padding-bottom:var(--sp-4);
+}
+.formulaire__large{grid-column:1/-1}
+@media (max-width:479px){
+  .formulaire{grid-template-columns:1fr;padding:var(--sp-5)}
+}
+
+.coordonnees{
+  --c-trait:var(--c-encre);--e-trait:1.5px;
+  padding:var(--sp-5) 0 0;display:flex;flex-direction:column;gap:var(--sp-5);
+}
+.coordonnees h3{
+  font-family:var(--f-mono);font-weight:500;font-size:var(--t-etiquette);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-encre-60);
+}
+.coordonnees address{font-style:normal;display:flex;flex-direction:column;gap:var(--sp-2)}
+.coordonnees a{
+  display:inline-block;padding-block:var(--sp-2);
+  text-decoration:underline;text-underline-offset:3px;
+}
+.coordonnees a:hover{color:var(--c-encre)}
+.coordonnees__bloc+.coordonnees__bloc{padding-top:var(--sp-5);border-top:var(--bd-fin)}
+.coordonnees__zones{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-3)}
+
+/* ------------------------------------------------------------
+   PIED DE PAGE
+   ------------------------------------------------------------ */
+/* Le pied porte lui-même la réserve d'espace de la barre d'action :
+   son noir descend ainsi jusqu'au bas de l'écran et passe derrière la
+   barre. Réservé sur le corps de page, il laissait au contraire une
+   bande claire sous le pied — exactement là où la barre se pose. */
+.pied{
+  background:var(--c-bitume);color:var(--c-craie);
+  padding-top:var(--sp-9);padding-bottom:var(--h-barre-mobile);
+  overflow:hidden;position:relative;z-index:2;
+}
+/* Le pied est le bordereau de fin de dossier : des cellules à filets,
+   sans fond ni rayon, chacune coiffée de son intitulé. La grille cesse
+   d'être une mise en page invisible pour devenir la structure lisible
+   du document. */
+.pied__grille{
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;
+  border-top:1px solid var(--c-ligne-d);
+}
+.pied__grille>*{
+  padding:var(--sp-6) var(--sp-5);
+  border-left:1px solid var(--c-ligne-d);
+}
+.pied__grille>*:first-child{border-left:0;padding-left:0}
+@media (max-width:767px){
+  .pied__grille{grid-template-columns:1fr 1fr}
+  .pied__marque{grid-column:1/3;border-bottom:1px solid var(--c-ligne-d)}
+  .pied__grille>*{padding:var(--sp-5) var(--sp-4)}
+  .pied__grille>*:nth-child(2){border-left:0;padding-left:0}
+}
+.pied__marque img{height:36px;width:auto;margin-bottom:var(--sp-5);filter:brightness(0) invert(1)}
+.pied address{font-style:normal;display:flex;flex-direction:column;color:var(--c-craie-60)}
+.pied address a,.pied address span{display:inline-block;padding-block:var(--sp-2)}
+.pied address a:hover{color:var(--c-craie)}
+.pied__col h3{
+  font-family:var(--f-mono);font-weight:500;font-size:var(--t-etiquette);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-craie-60);
+}
+.pied__col ul{margin-top:var(--sp-3);display:flex;flex-direction:column}
+.pied__col a{
+  display:block;padding-block:var(--sp-2);font-size:var(--t-petit);
+  transition:color var(--d-rapide) var(--e-standard);
+}
+.pied__col a:hover{color:var(--c-craie)}
+.pied__legal{
+  margin-top:var(--sp-8);padding-top:var(--sp-5);border-top:1px solid var(--c-ligne-d);
+  display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-5);justify-content:space-between;
+  font-family:var(--f-texte);font-size:14px;color:var(--c-craie-60);
+}
+.pied__legal a{display:inline-block;padding-block:var(--sp-2)}
+.pied__legal a:hover{color:var(--c-craie)}
+/* Le logotype est centré, et non calé à gauche : sur un large écran il
+   ne remplit jamais toute la ligne, et tout le vide se retrouvait sinon
+   du même côté. Le centrage garantit aussi qu'un éventuel dépassement
+   se répartisse également au lieu de rogner la fin du mot. */
+.pied__logotype{
+  margin-top:var(--sp-7);margin-bottom:-.16em;
+  padding-inline:var(--grille-marge);
+  font-family:var(--f-titre);font-weight:800;font-size:min(9.8vw,12rem);
+  text-transform:uppercase;letter-spacing:-.04em;line-height:.8;
+  text-align:center;white-space:nowrap;user-select:none;
+}
+/* Sur téléphone il occuperait un écran entier pour un mot que le logo
+   du haut a déjà dit, et il passe juste derrière la barre d'action.
+   C'est lui qui fermait le pied : sans lui, les mentions légales
+   viendraient buter contre le bas. */
+@media (max-width:767px){
+  .pied__logotype{display:none}
+  .pied{padding-bottom:calc(var(--sp-7) + var(--h-barre-mobile))}
+}
