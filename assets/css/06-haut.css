@@ -12,7 +12,7 @@
 /* Les deux colonnes se répondent au centre plutôt que de s'aligner sur
    leur bas : l'image étant plus haute que le texte, un alignement bas
    reporterait toute la différence en vide au-dessus du titre. */
-.couverture__grille{align-items:center;padding-bottom:var(--sp-7)}
+.couverture__grille{align-items:center;padding-bottom:var(--sp-5)}
 .couverture__texte{grid-column:1/6}
 /* La preuve est l'argument le plus fort du dossier : elle prend sept
    colonnes sur douze, mais reste dans les marges de page — elle se
@@ -74,7 +74,7 @@
   .couverture h1 .ligne::after{content:" "}
   .js .couverture h1 .ligne>span{display:inline;transform:none}
   .couverture__texte,.couverture__preuve{grid-column:1/5}
-  .couverture__grille{padding-bottom:var(--sp-6)}
+  .couverture__grille{padding-bottom:var(--sp-4)}
   /* La barre d'action fixe propose déjà « Appeler » et « Devis gratuit »
      en permanence : les répéter ici ne ferait qu'allonger la couverture
      avant d'arriver à la preuve. */
@@ -83,8 +83,8 @@
 
 /* Le rembourrage de la section suivante fournit déjà la respiration :
    celui du cartouche n'a plus qu'à le décoller de son filet. */
-.couverture__cartouche{padding-bottom:var(--sp-5)}
-@media (max-width:767px){.couverture__cartouche{padding-bottom:var(--sp-4)}}
+.couverture__cartouche{padding-bottom:var(--sp-3)}
+@media (max-width:767px){.couverture__cartouche{padding-bottom:var(--sp-3)}}
 
 /* ------------------------------------------------------------
    02 · L'ENTREPRISE — relevé et engagements réunis
