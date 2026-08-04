@@ -97,13 +97,20 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
 .nb{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
 /* Surlignage : un seul mot par titre. */
-/* Le fond suit la boîte de ligne, qui s'arrête à la hauteur des
-   capitales : sans marge haute, l'accent d'un Î ou d'un É dépasse du
-   rouge. Le débord vertical est purement visuel, il ne pousse pas les
-   lignes voisines puisque l'élément est en ligne. */
+/* Un trait tiré sous le mot plutôt qu'un aplat derrière lui : le mot
+   reste à l'encre du titre, et le rouge redevient un signe posé — dans
+   la logique du dossier, on souligne, on ne surligne pas.
+   Le trait est peint dans le fond et non en soulignement typographique :
+   il garde ainsi une épaisseur et une position constantes, sans être
+   interrompu par les jambages.
+   Il est placé À L'INTÉRIEUR de la boîte de ligne, que le masque de
+   révélation rogne au ras. */
 .souligne{
-  background:var(--c-signal);color:var(--c-fiche);
-  padding:.1em .12em .04em;
+  background-image:linear-gradient(var(--c-signal),var(--c-signal));
+  background-repeat:no-repeat;
+  background-size:100% .1em;
+  background-position:left calc(100% - .1em);
+  padding:0 .04em;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
 

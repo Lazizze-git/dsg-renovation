@@ -27,7 +27,7 @@
 .couverture h1{
   margin-top:var(--sp-5);
   font-family:var(--f-titre);font-weight:800;font-size:var(--t-couverture);
-  text-transform:uppercase;letter-spacing:-.035em;line-height:1.02;
+  text-transform:uppercase;letter-spacing:-.035em;line-height:.98;
 }
 /* La fenêtre du masque s'ouvre vers le haut de la même quantité, sinon
    elle rognerait le fond du surlignage qu'on vient d'agrandir. La marge
