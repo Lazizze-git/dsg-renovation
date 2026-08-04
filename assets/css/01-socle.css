@@ -106,13 +106,25 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
    Il est placé À L'INTÉRIEUR de la boîte de ligne, que le masque de
    révélation rogne au ras. */
 .souligne{
+  --trait:.12em;
   background-image:linear-gradient(var(--c-signal),var(--c-signal));
   background-repeat:no-repeat;
-  background-size:100% .1em;
-  background-position:left calc(100% - .1em);
+  background-size:100% var(--trait);
+  /* Remonté sous la ligne de base : au ras du bas de la boîte, il
+     flottait dans l'espace réservé aux descendantes, que ce mot en
+     capitales n'utilise pas. */
+  background-position:left calc(100% - .2em);
   padding:0 .04em;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
+/* Le trait se tire à la règle, comme tous les filets du dossier — mais
+   après le titre, qu'il vient souligner une fois celui-ci en place.
+   Sans JavaScript il est simplement là, entier. */
+.js .souligne{
+  background-size:0 var(--trait);
+  transition:background-size var(--d-ample) var(--e-power4) 480ms;
+}
+.js .est-vu .souligne{background-size:100% var(--trait)}
 
 /* ============================================================
    MISE EN PAGE
@@ -244,6 +256,7 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
   /* Les primitives partent d'un remplissage à zéro : sans cette
      réinitialisation, filets et voiles ne s'afficheraient jamais. */
   .js .trace{background-size:100% var(--e-trait,1px)!important}
+  .js .souligne{background-size:100% var(--trait)!important;transition:none}
   .metiers__ligne{background-size:100% 0,100% 1px!important}
   .metiers__ligne:hover{background-size:100% 100%,100% 1px!important}
   .btn--plein::after{
