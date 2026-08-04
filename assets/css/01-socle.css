@@ -114,7 +114,7 @@ h1,h2,h3{font-family:var(--f-titre);font-weight:500;letter-spacing:-.025em;text-
      dégager les jambages, assez haut pour rester rattaché au mot. La
      boîte de ligne est desserrée d'autant pour lui laisser la place
      sans que le masque de révélation ne le rogne. */
-  background-position:left calc(100% - .14em);
+  background-position:left calc(100% - .075em);
   padding:0 .04em;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }

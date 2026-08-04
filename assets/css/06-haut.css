@@ -32,12 +32,16 @@
 /* La fenêtre du masque s'ouvre vers le haut de la même quantité, sinon
    elle rognerait le fond du surlignage qu'on vient d'agrandir. La marge
    négative annule le décalage : la ligne ne bouge pas. */
+/* La fenêtre du masque s'ouvre en haut pour les accents et en bas pour
+   le trait de soulignement, sans déplacer la ligne : les marges
+   négatives annulent exactement les rembourrages. */
 .couverture h1 .ligne{
   display:block;overflow:hidden;
   padding-top:.16em;margin-top:-.16em;
+  padding-bottom:.14em;margin-bottom:-.14em;
 }
 .js .couverture h1 .ligne>span{
-  display:block;transform:translateY(105%);
+  display:block;transform:translateY(120%);
   transition:transform var(--d-ample) var(--e-sortie);
 }
 .js .couverture.est-vu h1 .ligne>span{transform:none}
@@ -67,9 +71,9 @@
   .couverture h1{display:block}
   .couverture h1 .ligne{
     display:inline;overflow:visible;
-    /* La fenêtre du masque n'a plus lieu d'être : sans elle, le fond du
-       surlignage déborde librement au-dessus des accents. */
-    padding-top:0;margin-top:0;
+    /* La fenêtre du masque n'a plus lieu d'être : sans elle, le trait
+       et les accents débordent librement. */
+    padding:0;margin:0;
   }
   .couverture h1 .ligne::after{content:" "}
   .js .couverture h1 .ligne>span{display:inline;transform:none}
