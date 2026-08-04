@@ -138,6 +138,7 @@
    FILTRES — boutons de tri des réalisations
    ------------------------------------------------------------ */
 .filtres{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+
 .filtre{
   min-height:40px;padding:0 var(--sp-4);
   border:var(--bd-fin);border-radius:var(--r-net);
@@ -152,4 +153,32 @@
 .filtre[aria-pressed="true"]{
   background:var(--c-encre);border-color:var(--c-encre);color:var(--c-papier);
 }
+/* Sur téléphone les quatre filtres tiennent sur une seule ligne : ils
+   se resserrent, et cessent de passer à la ligne. Sur les écrans les
+   plus étroits, où même resserrés ils ne tiendraient pas, la rangée
+   défile latéralement plutôt que de se casser en deux — un filtre à
+   demi visible sur le bord indique de lui-même qu'on peut la pousser.
+   Le débord jusqu'aux marges de page évite que le dernier ne paraisse
+   tranché par le bord de l'écran. */
+@media (max-width:767px){
+  .filtres{
+    /* Occupe sa propre ligne dans la barre : sans quoi le parent, en
+       flex, contraindrait sa largeur et le débord serait rogné. */
+    flex:1 1 100%;
+    flex-wrap:nowrap;
+    gap:6px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin-inline:calc(-1 * var(--grille-marge));
+    padding-inline:var(--grille-marge);
+  }
+  .filtres::-webkit-scrollbar{display:none}
+  .filtre{
+    flex:0 0 auto;
+    padding:0 var(--sp-3);
+    font-size:14px;
+  }
+}
+
 
